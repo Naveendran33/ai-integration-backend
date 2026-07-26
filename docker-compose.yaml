@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ai-integration-db-postgres
+    environment:
+      POSTGRES_DB: ai_integration_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password221
+    ports:
+      - "3212:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ai-network
+
+  app:
+    build: .
+    ports:
+      - "8070:8070"
+    depends_on:
+      - postgres
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: password221
+      JDBC_URL: jdbc:postgresql://ai-integration-db-postgres:5432/ai_integration_db
+    networks:
+      - ai-network
+
+
+volumes:
+  postgres_data:
+
+networks:
+  ai-network:
+
