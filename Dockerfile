@@ -1,17 +1,8 @@
-FROM eclipse-temurin:21-jdk AS builder
+FROM eclipse-temurin:21-jdk
 LABEL authors="Naveendran"
 
 WORKDIR /app
 
-COPY . .
-
-RUN ./mvnw clean package -DskipTests
-
-
-FROM eclipse-temurin:21-jdk AS ai-integration-image
-
-WORKDIR /app
-
-COPY --from=builder /app/target/*.jar ai-integration.jar
+COPY target/*.jar ai-integration.jar
 
 ENTRYPOINT ["java","-jar","ai-integration.jar"]
