@@ -23,6 +23,7 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: password221
       JDBC_URL: jdbc:postgresql://ai-integration-db-postgres:5432/ai_integration_db
+      API_KEY: your_openrouter_api_key_here
     networks:
       - ai-network
 
